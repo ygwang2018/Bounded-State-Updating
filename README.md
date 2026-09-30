@@ -6,7 +6,7 @@ Reproducibility materials for the paper
 
 This repository contains the empirical reproduction materials for the real-time macroeconomic, controlled-experiment, M3, fitting-depth, revision-sensitivity, and external-benchmark analyses reported in the manuscript and Supplementary Information.
 
-The package is split into four ZIP archives for convenient repository distribution. Extract **all four archives into the same parent directory**. They share the common top-level folder:
+The core reproducibility package is split into four ZIP archives for convenient repository distribution. Extract **all four core archives into the same parent directory**. They share the common top-level folder:
 
 ```text
 Bounded_State_Updating_complete_reproducibility/
@@ -17,7 +17,7 @@ and together reconstruct the complete reproducibility package.
 ## Download files
 
 1. `Bounded_State_Updating_repro_01_core_rtdsm_external_controlled.zip`  
-   Core reproduction materials, including the July 1983--June 2025 long-sample RTDSM extension, frozen 2018--2025 RTDSM validation materials, internal-method code, controlled experiments, fitting-depth code, external benchmark materials, and table/figure source data.
+   Core reproduction materials, including the July 1983--June 2025 long-sample RTDSM extension and its canonical R processed inputs/final outputs, frozen 2018--2025 RTDSM validation materials, internal-method code, controlled experiments, fitting-depth code, external benchmark materials, and table/figure source data.
 
 2. `Bounded_State_Updating_repro_02_M3_analysis.zip`  
    Complete M3 analysis code and supporting outputs, including the 3,003-series contamination/refitting analyses, Gate F records, fitted-layer decomposition, and M3 fitting-depth summaries.
@@ -28,9 +28,12 @@ and together reconstruct the complete reproducibility package.
 4. `Bounded_State_Updating_repro_04_M3_primary_fits.zip`  
    Large series-level M3 Primary fit record.
 
+5. `Bounded_State_Updating_repro_05_figure_code.zip`  
+   Standalone figure-reproduction bundle for the four current JBES manuscript figures. It contains portable Python scripts, the minimum required source-data CSV files, a one-command runner, requirements, and the current PDF figures as visual references. This archive is independent of the four-core-archive merge.
+
 ## Reconstructing the package
 
-Download all four ZIP files and extract them to the same location. Because each archive uses the same top-level directory, their contents will merge into one directory:
+Download the four core ZIP files (01--04) and extract them to the same location. Because each core archive uses the same top-level directory, their contents will merge into one directory:
 
 ```text
 Bounded_State_Updating_complete_reproducibility/
@@ -54,7 +57,7 @@ It reconstructs the PRE/REF histories, validates the overlapping January 2018--J
 Rscript R/run_all.R
 ```
 
-The long-sample numerical results should be treated as final only after the frozen-overlap validation reports a pass.
+The release includes the canonical R long-sample outputs under `long_sample_rtdsm/results/`. A fresh run should be treated as valid only after the frozen-overlap validation reports a pass.
 
 ### Controlled experiments
 
@@ -64,6 +67,15 @@ The controlled contamination and persistent-shift experiments are under `control
 
 The M3 reproduction materials are under `M3/`, with supporting frozen records under `R1_R2/04_R1_M3_PRIMARY/` and `R1_R2/07_SUMMARIES/`.
 
+Portable package-level entry points are:
+
+```bash
+Rscript M3/formal_gate_f/run_formal_gate_f.R
+Rscript M3/fitted_layer/run_fitted_layer_decomposition.R
+```
+
+The historical fitting-depth runner under `fitting_depth_code/modified/run_m3.R` is retained for provenance and depends on the original `01_CODE_SNAPSHOT` execution layout; it is not a standalone public entry point.
+
 ### Fitting-depth experiments
 
 The fitting-depth code and protocol are under `fitting_depth_code/`, with frozen fit/result records under `R1_R2/`.
@@ -71,6 +83,16 @@ The fitting-depth code and protocol are under `fitting_depth_code/`, with frozen
 ### External benchmark reproduction
 
 The validated RTDSM benchmark materials are under `realtime/`, `method_code/`, `external/`, and `R1_R2/05_R2_BENCHMARKS/`.
+
+### Figure reproduction
+
+The optional standalone archive `Bounded_State_Updating_repro_05_figure_code.zip` reproduces the four figures currently referenced by the JBES manuscript. After extracting that archive, run:
+
+```bash
+python scripts/run_all.py
+```
+
+It writes PDF, SVG, PNG, and TIFF outputs from the packaged source-data tables and does not refit any statistical model.
 
 ## Data and third-party code
 
@@ -86,4 +108,4 @@ The frozen reproduction records document, among other dependencies, R 4.3.3, `fo
 
 ## Documentation
 
-After extracting all four archives, see `README.md`, `README_TECHNICAL_DETAIL.md`, `PROVENANCE_COMPLETE.md`, `RECOVERED_CODE_PROVENANCE.md`, and `source_data_mapping.md` for detailed reproduction instructions and provenance.
+After extracting the four core archives, see `README.md`, `README_TECHNICAL_DETAIL.md`, `PROVENANCE_COMPLETE.md`, `RECOVERED_CODE_PROVENANCE.md`, and `source_data_mapping.md` for detailed reproduction instructions and provenance. The standalone figure archive has its own README.
